@@ -1,0 +1,11 @@
+.bookDiv {
+    cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 7px;
+    transition: background-color 0.1s;
+    padding: 5px;
+}
+
+.bookDiv:hover {
+    background-color: #d3cac3;
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/banner.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/bookFind.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/search.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/submitAvailable.css}">
+</head>
+<body>
+    <div style="display: flex">
+        <a th:href="@{/books/}"> <--- Back to library </a>
+        <div th:replace="fragments/searchBlockFragment :: #searchBlock"></div>
+    </div>
+    <div style="position: relative; top: 40px;">
+        <hr/>
+        <div class="banner" th:text="'Search results: '"></div>
+        <div th:each="book : ${books}" style="margin-bottom: 5px">
+            <div style="display: flex">
+                <a th:href="@{/books/{id}(id=${book.getBook_id()})}"
+                   th:text="${book.getName()} + ', ' + ${book.getAuthor()} + ', ' + ${book.getYear()}">book</a>
+                <div style="margin-left: 10px;" th:if="${book.hasPerson()}">
+                    --> Now at
+                    <span style="font-weight: bold; color: #d50000; margin-left: 5px"
+                          th:text="${book.getPerson().getName()}"></span>
+                </div>
+                <div style="margin-left: 10px;" th:unless="${book.hasPerson()}">
+                    --> Now is
+                    <span style="color: #19a719; font-weight: bold; margin-left: 5px"> free</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script th:src="@{/js/searchBooks.js}"></script>
+</body>
+</html>
