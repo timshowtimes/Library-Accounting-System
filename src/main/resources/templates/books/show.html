@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/banner.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/submitAvailable.css}">
+</head>
+<body>
+    <div class="menu">
+        <div th:text="${book.getName()} + ', ' + ${book.getAuthor()} + ', ' + ${book.getYear()}"></div>
+        <br/>
+        <div th:if="${book.hasPerson()}">
+            <form th:method="PATCH" th:action="@{/books/{id}/undo(id=${book.getBook_id()})}">
+                <a style="color: #90a750;" th:href="@{/people/{id}(id=${person.getPerson_id()})}" th:text="${person.getName()}"></a>
+                took this book.
+                <input class="submitButton" type="submit" value="Освободить книгу!">
+            </form>
+        </div>
+        <div th:unless="${book.hasPerson()}">
+            <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getBook_id()})}">
+                <p> Эта книга свободна. Кому ее присвоить? </p>
+                <label for="client"> Выбрать читателя: </label>
+                <select th:object="${person}" th:field="*{person_id}" id="client">
+                    <option th:each="person : ${people}" th:value="${person.getPerson_id()}"
+                            th:text="${person.getName()}"></option>
+                </select>
+                <input class="submitButton" type="submit" value="Закрепить за ним!"/>
+            </form>
+        </div>
+        <hr/>
+        <form style="margin-bottom: 5px" th:method="GET" th:action="@{/books/{id}/edit(id=${book.getBook_id()})}">
+            <input class="submitButton" type="submit" value="Редактировать">
+        </form>
+        <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getBook_id()})}">
+            <input class="submitButton" type="submit" value="Удалить">
+        </form>
+        <br/>
+    </div>
+    <div style="margin-top: 30px">
+        <a class="menu backToMenu" th:href="@{/books}"> <--- Назад в библиотеку </a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/banner.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bookFind.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/search.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bookList.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/submitAvailable.css}">
+</head>
+<body>
+    <div style="display: flex">
+        <a class="menu backToMenu" th:href="@{/books}"> <--- Назад в библиотеку </a>
+        <div th:replace="fragments/searchBlockFragment :: #searchBlock"></div>
+    </div>
+    <div style="position: relative; top: 40px;">
+        <hr/>
+        <div class="banner" th:text="'Результаты поиска: '"></div>
+        <div class="bookList" style="color: white">
+            <div th:each="book : ${books}" style="margin-bottom: 5px">
+                <div style="display: flex">
+                    <a style="color: bisque" th:href="@{/books/{id}(id=${book.getBook_id()})}"
+                       th:text="${book.getName()} + ', ' + ${book.getAuthor()} + ', ' + ${book.getYear()}">book</a>
+                    <div style="margin-left: 10px;" th:if="${book.hasPerson()}">
+                        --> На данный момент у
+                        <span style="font-weight: bold; color: #d50000;"
+                              th:text="${book.getPerson().getName()}"></span>
+                    </div>
+                    <div style="margin-left: 10px;" th:unless="${book.hasPerson()}">
+                        --> На данный момент
+                        <span style="color: #19a719; font-weight: bold;"> свободна</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script th:src="@{/js/searchBooks.js}"></script>
+</body>
+</html>

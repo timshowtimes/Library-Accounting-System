@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/expiredColors.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/banner.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/submitAvailable.css}">
+</head>
+<body>
+    <div style="margin-top: 30px; margin-bottom: 30px;">
+        <a class="menu backToMenu" th:href="@{/people}"> <--- Назад в клиентскую базу </a>
+    </div>
+    <div class="menu">
+        <div th:text="'ID: ' + ${person.getPerson_id()}"></div>
+        <div style="display: flex">
+            <div style="font-size: 30px; color: bisque;" th:text="${person.getName()} + ', ' + ${person.getYear_of_birth()}"></div>
+            <form style="margin-bottom: 5px" th:method="GET" th:action="@{/people/{id}/edit(id = ${person.getPerson_id()})}">
+                <input style="margin-left: 20px;" class="submitButton" type="submit" value="Редактировать">
+            </form>
+            <form th:method="DELETE" th:action="@{/people/{id}(id = ${person.getPerson_id()})}">
+                <input style="margin-left: 10px;" class="submitButton" type="submit" value="Удалить">
+            </form>
+        </div>
+        <div th:if="${bookList.isEmpty()}">
+            <h3 style="color: #f9a403;"> Этот читатель пока не взял ни одной книги. </h3>
+        </div>
+        <div th:unless="${bookList.isEmpty()}">
+            <hr/>
+            <h3 style="margin-bottom: -5px;"> Книги: </h3>
+            <div class="expiredDiv" th:each="book : ${bookList}" style="display: flex">
+                <a style="font-size: 20px; color: bisque;" th:href="@{/books/{id}(id=${book.getBook_id()})}">
+                    <p th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"></p>
+                </a>
+                <input type="hidden" th:value="${book.isExpired()}" class="isExpiredValue"/>
+                <div th:class="${book.isExpired() ? 'expired' : 'not-expired'}"
+                     th:with="daysLeft=${book.dayBeforeTheDelay()}">
+                    <p th:if="${daysLeft <= 10}" th:text="${11 - daysLeft} + ' суток до возврата'"></p>
+                    <p th:if="${daysLeft > 10}" th:text="${daysLeft - 10} + ' суток просрочки'"></p>
+                </div>
+            </div>
+        </div>
+        <hr/>
+    </div>
+    <script th:src="@{/js/colorDivBorder.js}"></script>
+</body>
+</html>

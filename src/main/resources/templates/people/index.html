@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of clients</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/banner.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bookList.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/submitAvailable.css}">
+</head>
+<body>
+    <div style="display: flex">
+        <a class="menu backToMenu" th:href="@{/}"> <--- Назад в меню </a>
+    </div>
+    <div style="width: fit-content; margin-top: 10px" class="bookList">
+        <div th:each="person : ${people}">
+            <a style="font-size: 20px; color: white" th:href="@{/people/{id}(id = ${person.getPerson_id()})}"
+               th:text="${person.getName()} + ', ' + ${person.getYear_of_birth()}">user</a>
+        </div>
+    </div>
+    <hr/>
+    <form style="margin-bottom: 5px" th:method="GET" th:action="@{/people/new}">
+        <input class="submitButton" type="submit" value="Добавить нового читателя">
+    </form>
+</body>
+</html>

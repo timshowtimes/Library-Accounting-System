@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Books</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bookFind.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/search.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/pagination.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/submitAvailable.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/banner.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bookList.css}">
+</head>
+<body>
+    <div style="display: flex">
+        <a class="menu backToMenu" th:href="@{/}"> <--- Назад в меню </a>
+        <div th:replace="fragments/searchBlockFragment :: #searchBlock"></div>
+    </div>
+    <div style="position: relative; top: 40px;">
+        <div style="display: flex; justify-content: space-between">
+            <div style="height: 45vh; overflow: auto;" class="bookList">
+                <div style="margin-bottom: 8px;" th:each="book : ${bookList}">
+                    <a style="font-size: 20px; color: white" th:href="@{/books/{id}(id=${book.getBook_id()})}"
+                       th:text="${book.getName()} + ', ' + ${book.getAuthor()} + ', ' + ${book.getYear()}">book</a>
+                </div>
+            </div>
+            <form th:method="GET" th:action="@{/books}" class="pageWindow">
+                <label for="page" style="margin-right: 61px">Страница:</label>
+                <input type="number" min="0" id="page" th:name="'page'" th:value="${page}"
+                       style="margin-bottom: 5px; margin-left: 7px"/>
+                <br/>
+                <label for="booksPerPage">Книг на странице:</label>
+                <input type="number" min="1" id="booksPerPage" th:name="'booksPerPage'" th:value="${booksPerPage}"
+                       style="margin-bottom: 15px"/>
+                <br/>
+                <input type="checkbox" th:name="'sortingByDate'" th:value="true" id="sort"
+                       style="margin-top: 10px">
+                <label for="sort">Сортировка по дате</label>
+                <br/>
+                <input class="submitButton" type="submit" value="Пагинация" style="margin-top: 13px"/>
+            </form>
+        </div>
+        <form th:method="GET" th:action="@{/books/sortByDate}">
+            <input class="submitButton" type="submit" value="Сортировка всего списка по дате" style="margin-top: 20px"/>
+        </form>
+        <form th:method="GET" th:action="@{/books}">
+            <input class="submitButton" type="submit" value="Полный список по умолчанию" style="margin-top: 10px"/>
+        </form>
+        <hr/>
+        <br/>
+        <form style="margin-bottom: 5px" th:method="GET" th:action="@{/books/new}">
+            <input class="submitButton" type="submit" value="Добавить новую книгу">
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script th:src="@{/js/searchBooks.js}"></script>
+</body>
+</html>

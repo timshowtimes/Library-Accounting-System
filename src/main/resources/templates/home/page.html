@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/submitAvailable.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/banner.css}">
+</head>
+<body >
+    <h2 class="banner" style="background-color: #2e394ab2">Добро пожаловать в систему учета библиотеки!</h2>
+    <br/>
+    <div style="text-align: center">
+      <form th:method="GET" th:action="@{/books}" style="margin-bottom: 10px;">
+        <input class="submitButton submitButtonHomePage" type="submit" value="Библиотека">
+      </form>
+      <form style="margin-bottom: 10px" th:method="GET" th:action="@{/people}">
+        <input class="submitButton submitButtonHomePage" type="submit" value="Клиентская база данных">
+      </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+.bookList {
+    background-image: linear-gradient(to right, #000, #392b22);
+    border-radius: 10px;
+    padding: 15px;
+    width: fit-content;
+}
